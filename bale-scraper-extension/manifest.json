@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Bale Channel Scraper",
+  "version": "1.0.0",
+  "description": "A production-ready Chrome extension for scraping and archiving public Bale messenger channel preview pages with controlled, user-configurable export and download capabilities.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "downloads",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://ble.ir/*",
+    "https://web.bale.ai/*",
+    "https://file-gw*.ble.ir/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Bale Channel Scraper"
+  },
+  "background": {
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://ble.ir/s/*", "https://web.bale.ai/*"],
+      "js": ["src/content/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["https://ble.ir/*", "https://web.bale.ai/*"]
+    }
+  ]
+}

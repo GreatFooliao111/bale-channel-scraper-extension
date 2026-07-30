@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bale Channel Scraper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>Bale Channel Scraper</h1>
+      <p class="subtitle">Archive public channel content</p>
+    </header>
+
+    <!-- Status Section -->
+    <section class="status-section">
+      <div id="statusIndicator" class="status-indicator idle"></div>
+      <span id="statusText">Ready</span>
+    </section>
+
+    <!-- Channel Info -->
+    <section id="channelInfo" class="channel-info hidden">
+      <img id="channelAvatar" src="" alt="Channel avatar" class="channel-avatar hidden">
+      <div class="channel-details">
+        <h2 id="channelName" class="channel-name"></h2>
+        <p id="channelMembers" class="channel-members"></p>
+      </div>
+    </section>
+
+    <!-- Scrape Controls -->
+    <section class="controls-section">
+      <div class="control-group">
+        <label for="contentTypeFilter">Content Type Filter:</label>
+        <select id="contentTypeFilter">
+          <option value="all">All Posts</option>
+          <option value="text">Text Only</option>
+          <option value="image">Images Only</option>
+          <option value="video">Videos Only</option>
+          <option value="text+image">Text + Images</option>
+        </select>
+      </div>
+
+      <div class="control-group date-range">
+        <label>
+          From:
+          <input type="date" id="startDate">
+        </label>
+        <label>
+          To:
+          <input type="date" id="endDate">
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button id="btnStartScrape" class="btn btn-primary">
+          <span class="btn-icon">📥</span>
+          Start Scrape
+        </button>
+        <button id="btnPauseResume" class="btn btn-secondary hidden">
+          <span class="btn-icon">⏸️</span>
+          Pause
+        </button>
+        <button id="btnStop" class="btn btn-danger hidden">
+          <span class="btn-icon">⏹️</span>
+          Stop
+        </button>
+      </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progressSection" class="progress-section hidden">
+      <div class="progress-bar-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+      <div class="progress-stats">
+        <span id="postCount">0 posts collected</span>
+        <span id="scrapeProgress"></span>
+      </div>
+    </section>
+
+    <!-- Export Section -->
+    <section id="exportSection" class="export-section hidden">
+      <h3>Export Data</h3>
+      <div class="button-row">
+        <button id="btnExportJSON" class="btn btn-secondary">
+          <span class="btn-icon">📄</span>
+          JSON
+        </button>
+        <button id="btnExportCSV" class="btn btn-secondary">
+          <span class="btn-icon">📊</span>
+          CSV
+        </button>
+        <button id="btnExportMarkdown" class="btn btn-secondary">
+          <span class="btn-icon">📝</span>
+          Markdown
+        </button>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="downloadSection" class="download-section hidden">
+      <h3>Download Media</h3>
+      
+      <div class="control-group">
+        <label>
+          <input type="checkbox" id="downloadImages" checked>
+          Download Images (<span id="imageCount">0</span>)
+        </label>
+        <label>
+          <input type="checkbox" id="downloadVideos">
+          Download Videos (<span id="videoCount">0</span>)
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label for="concurrency">Concurrent Downloads:</label>
+        <input type="number" id="concurrency" min="1" max="5" value="2">
+      </div>
+
+      <div class="control-group">
+        <label for="downloadDelay">Delay (ms):</label>
+        <input type="number" id="downloadDelay" min="500" step="500" value="1000">
+      </div>
+
+      <div class="button-row">
+        <button id="btnQueueDownloads" class="btn btn-primary">
+          <span class="btn-icon">📥</span>
+          Queue Downloads
+        </button>
+        <button id="btnPauseQueue" class="btn btn-secondary hidden">
+          ⏸️ Pause
+        </button>
+        <button id="btnResumeQueue" class="btn btn-secondary hidden">
+          ▶️ Resume
+        </button>
+        <button id="btnClearQueue" class="btn btn-danger">
+          🗑️ Clear
+        </button>
+      </div>
+
+      <div id="queueStatus" class="queue-status hidden">
+        <div class="queue-stats">
+          <span>Pending: <strong id="pendingCount">0</strong></span>
+          <span>Completed: <strong id="completedCount">0</strong></span>
+          <span>Failed: <strong id="failedCount">0</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Messages -->
+    <div id="messageArea" class="message-area hidden"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Use responsibly. Respect rate limits.</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
